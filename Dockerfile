@@ -25,8 +25,8 @@ RUN git config --global user.name "Build Bot"
 
 
 # Build deps
-RUN pacman -Suy --noconfirm nodejs unzip
-RUN yaourt -Suya --noconfirm nodejs-bower nodejs-grunt-cli php-composer
+RUN pacman -Suy --noconfirm --needed nodejs unzip
+RUN yaourt -Suya --noconfirm --needed nodejs-bower nodejs-grunt-cli php-composer
 
 # get source code
 ADD https://github.com/FoxUSA/OpenNote/archive/master.zip /root/
