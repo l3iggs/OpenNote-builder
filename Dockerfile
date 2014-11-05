@@ -46,7 +46,7 @@ RUN grunt
 RUN pacman -Suy --noconfirm --needed apache php php-apache mariadb pwgen
 
 USER mysql
-#RUN mysqld &
+RUN mysqld & sleep 5
 #RUN mysqld-post &
 #USER root
 # setup mysql
