@@ -46,8 +46,8 @@ RUN grunt
 RUN pacman -Suy --noconfirm --needed apache php php-apache mariadb pwgen
 
 # setup mysql
-RUN su mysql -c "mysqld"
-RUN su mysql -c "mysqld-post"
+#RUN su mysql -c "mysqld"
+#RUN su mysql -c "mysqld-post"
 
 
 # setup apache with php and mysql enabled
