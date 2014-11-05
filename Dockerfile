@@ -7,5 +7,5 @@ RUN git config --global user.email "buildbot@none.com"
 RUN git config --global user.name "Build Bot"
 
 # Build deps
-RUN pacman -Suy --noconfirm npm node
+RUN pacman -Suy --noconfirm nodejs
 
