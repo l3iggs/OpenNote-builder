@@ -20,4 +20,4 @@ RUN rm /root/master.zip
 
 # Build
 WORKDIR /root/OpenNote/OpenNote
-RUN grunt build
+RUN grunt
