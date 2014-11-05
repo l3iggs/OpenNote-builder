@@ -45,11 +45,12 @@ RUN grunt
 # Install runtime deps
 RUN pacman -Suy --noconfirm --needed apache php php-apache mariadb pwgen
 
+ADD https://raw.githubusercontent.com/FoxUSA/OpenNote-Docker/master/create_mysql_admin_user.sh /root/
 # setup mysql
-USER mysql
-RUN mysqld & sleep 5
-RUN mysqld-post & sleep 1
-USER root
+#USER mysql
+#RUN mysqld & sleep 5
+#RUN mysqld-post & sleep 1
+#USER root
 
 #RUN ["/usr/bin/su", "mysql", "-c", "/usr/bin/mysqld --pid-file=/run/mysqld/mysqld.pid"]
 #RUN su mysql -c "mysqld-post"
