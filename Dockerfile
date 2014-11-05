@@ -63,6 +63,7 @@ RUN rm /app/Service/Config.*
 RUN rm /app/Service/install.php
 RUN cp -r -H /app /srv/http/notes
 RUN sudo chown -R http:http /srv/http
+RUN chmod -R 755 /srv/http
 
 CMD apachectl start & sleep 2
 
