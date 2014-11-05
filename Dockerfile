@@ -24,3 +24,9 @@ RUN npm install
 RUN sed -i 's/"bower install"/"bower --allow-root install"/g' Gruntfile.js
 RUN grunt
 
+# Install runtime deps
+RUN pacman -Suy --noconfirm apache php php-apache mariadb
+
+# Prepare for run
+RUN a2enmod php5 ssl
+RUN systemctl restart apache
