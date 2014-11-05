@@ -44,8 +44,8 @@ RUN sed -i 's/"bower install"/"bower --allow-root install"/g' Gruntfile.js
 RUN grunt
 
 # Install runtime deps
-RUN pacman -Suy --noconfirm apache php php-apache mariadb dbus
+RUN pacman -Suy --noconfirm apache php php-apache mariadb
 
 # Prepare for run
 RUN sed -i 's,#LoadModule ssl_module modules/mod_ssl.so,LoadModule ssl_module modules/mod_ssl.so\nLoadModule modules/libphp5.so,g' /etc/httpd/conf/httpd.conf
-#RUN systemctl restart httpd
+RUN systemctl restart httpd
