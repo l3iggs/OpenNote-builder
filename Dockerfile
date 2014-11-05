@@ -10,12 +10,14 @@ RUN pacman -Suy --noconfirm --needed base-devel
 ADD https://aur.archlinux.org/packages/pa/package-query/package-query.tar.gz /root/
 RUN tar -vxf /root/package-query.tar.gz -C /root/
 RUN cd /root/package-query && makepkg -s --noconfirm --asroot
-RUN ls -al /root
-RUN ls -al /root/package-query
-RUN pacman -U --noconfirm /root/package-query.pkg.tar.xz
-ADD https://aur.archlinux.org/packages/ya/yaourt/yaourt.tar.gz /root/
+RUN pacman -U --noconfirm /root/package-query/*.pkg.tar.xz
+RUN rm -rf /root/package-query
 
-RUN pacman -Suy --noconfirm package-query
+ADD https://aur.archlinux.org/packages/ya/yaourt/yaourt.tar.gz /root/
+RUN tar -vxf /root/yaourt.tar.gz -C /root/
+RUN cd /root/yaourt && makepkg -s --noconfirm --asroot
+RUN pacman -U --noconfirm /root/yaourt/*.pkg.tar.xz
+RUN rm -rf /root/yaourt
 
 # git
 RUN pacman -Suy --noconfirm git
