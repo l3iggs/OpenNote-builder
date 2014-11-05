@@ -36,12 +36,13 @@ ADD https://github.com/FoxUSA/OpenNoteService-PHP/archive/master.zip /root/
 RUN unzip /root/master.zip -d /root/
 RUN rm /root/master.zip
 
-# setup some links
-RUN ln -s /root/OpenNoteService-PHP-master/Service /root/OpenNote-master/OpenNote/Service
-RUN ln -s /root/OpenNote-master/OpenNote /app
-
 # Compose OpenNoteService
 RUN cd /root/OpenNoteService-PHP-master && composer install
+
+# setup some links
+RUN ln -s /root/OpenNoteService-PHP-master/Service /root/OpenNote-master/OpenNote/.
+RUN ln -s /root/OpenNoteService-PHP-master/vendor /root/OpenNote-master/OpenNote/.
+RUN ln -s /root/OpenNote-master/OpenNote /app
 
 # Build OneNote
 RUN cd /root/OpenNote-master && npm install
