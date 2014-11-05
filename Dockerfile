@@ -7,7 +7,7 @@ RUN git config --global user.email "buildbot@none.com"
 RUN git config --global user.name "Build Bot"
 
 # Build deps
-RUN pacman -Suy --noconfirm nodejs
+RUN pacman -Suy --noconfirm nodejs unzip
 RUN yaourt -Suya --noconfirm nodejs-bower nodejs-grunt-cli
 
 # get source code
