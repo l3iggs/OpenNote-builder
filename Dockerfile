@@ -40,11 +40,13 @@ RUN rm /root/master.zip
 RUN ln -s /root/OpenNoteService-PHP-master/Service /root/OpenNote-master/OpenNote/Service
 RUN ln -s /root/OpenNote-master/OpenNote /app
 
-# Build
-WORKDIR /root/OpenNote-master/
-RUN npm install
-RUN sed -i 's/"bower install"/"bower --allow-root install"/g' Gruntfile.js
-RUN grunt
+# Compose OpenNoteService
+cd /root/OpenNoteService-PHP-master && composer install
+
+# Build OneNote
+RUN cd /root/OpenNote-master && npm install
+RUN sed -i 's/"bower install"/"bower --allow-root install"/g' /root/OpenNote-master/Gruntfile.js
+RUN cd /root/OpenNote-master && grunt
 
 # Install runtime deps
 RUN pacman -Suy --noconfirm --needed apache php php-apache mariadb
