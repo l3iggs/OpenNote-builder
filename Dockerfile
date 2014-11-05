@@ -1,4 +1,5 @@
-FROM base/devel:latest
+#FROM base/devel:latest
+FROM codekoala/arch
 MAINTAINER l3iggs <l3iggs@live.com>
 
 # setup the generic build environment
