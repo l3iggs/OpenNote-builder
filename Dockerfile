@@ -61,7 +61,7 @@ RUN sed -i 's,LoadModule mpm_event_module modules/mod_mpm_event.so,LoadModule mp
 RUN sed -i 's,;extension=pdo_mysql.so,extension=pdo_mysql.so,g' /etc/php/php.ini
 RUN rm /app/Service/Config.*
 RUN rm /app/Service/install.php
-RUN cp -r -H /app /srv/http/notes
+RUN cp -r -L /app /srv/http/notes
 RUN sudo chown -R http:http /srv/http
 RUN chmod -R 755 /srv/http
 
