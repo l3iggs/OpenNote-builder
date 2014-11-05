@@ -20,4 +20,6 @@ RUN rm /root/master.zip
 
 # Build
 WORKDIR /root/OpenNote-master/OpenNote
-#RUN grunt
+RUN npm install
+RUN grunt
+
