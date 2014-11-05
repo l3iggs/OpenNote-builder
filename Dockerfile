@@ -10,3 +10,6 @@ RUN git config --global user.name "Build Bot"
 RUN pacman -Suy --noconfirm nodejs
 RUN yaourt -Suya --noconfirm nodejs-bower nodejs-grunt-cli
 
+# get source code
+ADD https://github.com/FoxUSA/OpenNote/archive/master.zip
+ADD https://github.com/FoxUSA/OpenNoteService-PHP/archive/master.zip
