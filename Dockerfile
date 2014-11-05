@@ -45,8 +45,13 @@ RUN grunt
 # Install runtime deps
 RUN pacman -Suy --noconfirm --needed apache php php-apache mariadb pwgen
 
-ADD https://raw.githubusercontent.com/FoxUSA/OpenNote-Docker/master/create_mysql_admin_user.sh /root/
 # setup mysql
+RUN mkdir /app
+RUN ln -s /root/OpenNoteService-PHP-master/Service /root/OpenNote-master/OpenNote/Service
+RUN ln -s /root/OpenNote-master/OpenNote /app
+ADD https://raw.githubusercontent.com/FoxUSA/OpenNote-Docker/master/create_mysql_admin_user.sh /root/
+
+
 #USER mysql
 #RUN mysqld & sleep 5
 #RUN mysqld-post & sleep 1
