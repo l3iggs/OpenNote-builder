@@ -12,6 +12,12 @@ RUN yaourt -Suya --noconfirm nodejs-bower nodejs-grunt-cli
 
 # get source code
 ADD https://github.com/FoxUSA/OpenNote/archive/master.zip /root/
-RUN unzip /root/master.zip
+RUN unzip /root/master.zip -d /root/
+RUN rm /root/master.zip
 ADD https://github.com/FoxUSA/OpenNoteService-PHP/archive/master.zip /root/
-RUN unzip /root/master.zip
+RUN unzip /root/master.zip -d /root/
+RUN rm /root/master.zip
+
+# Build
+WORKDIR /root/OpenNote/OpenNote
+RUN grunt build
