@@ -10,13 +10,13 @@ ADD https://aur.archlinux.org/packages/pa/package-query/package-query.tar.gz /ro
 RUN tar -vxf /root/package-query.tar.gz -C /root/
 RUN cd /root/package-query && makepkg -s --noconfirm --asroot
 RUN pacman -U --noconfirm --needed /root/package-query/*.pkg.tar.xz
-RUN rm -rf /root/package-query
+RUN rm -rf /root/package-query*
 
 ADD https://aur.archlinux.org/packages/ya/yaourt/yaourt.tar.gz /root/
 RUN tar -vxf /root/yaourt.tar.gz -C /root/
 RUN cd /root/yaourt && makepkg -s --noconfirm --asroot
 RUN pacman -U --noconfirm --needed /root/yaourt/*.pkg.tar.xz
-RUN rm -rf /root/yaourt
+RUN rm -rf /root/yaourt*
 
 # git
 RUN pacman -Suy --noconfirm --needed git
@@ -60,7 +60,9 @@ RUN sed -i 's,#LoadModule ssl_module modules/mod_ssl.so,LoadModule ssl_module mo
 RUN sed -i 's,LoadModule mpm_event_module modules/mod_mpm_event.so,LoadModule mpm_prefork_module modules/mod_mpm_prefork.so,g' /etc/httpd/conf/httpd.conf
 RUN sed -i 's,;extension=pdo_mysql.so,extension=pdo_mysql.so,g' /etc/php/php.ini
 RUN ln -s /app /srv/http/notes
+RUN sudo chown -R www-data /root/OpenNoteService-PHP-master/Service
+RUN sudo chown -R www-data /root/OpenNote-master/OpenNote
 
-RUN apachectl start & sleep 2
+CMD apachectl start & sleep 2
 
-CMD while true; sleep 2; done
+#CMD while true; sleep 2; done
