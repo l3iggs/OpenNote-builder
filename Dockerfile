@@ -21,6 +21,6 @@ RUN rm /root/master.zip
 # Build
 WORKDIR /root/OpenNote-master/OpenNote
 RUN npm install
-RUN sed -i 's/"bower install"/"bower --allow-root install"/g' Gruntfile.js
-RUN grunt
+#RUN sed -i 's/"bower install"/"bower --allow-root install"/g' Gruntfile.js
+#RUN grunt
 
