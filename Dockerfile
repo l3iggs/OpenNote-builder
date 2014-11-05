@@ -50,7 +50,7 @@ RUN grunt
 RUN pacman -Suy --noconfirm --needed apache php php-apache mariadb
 
 # setup mysql
-RUN pacman -Suy --noconfirm -needed pwgen
+RUN pacman -Suy --noconfirm --needed pwgen
 ADD https://raw.githubusercontent.com/FoxUSA/OpenNote-Docker/master/create_mysql_admin_user.sh /root/
 RUN chmod +x /root/create_mysql_admin_user.sh
 RUN /root/create_mysql_admin_user.sh
