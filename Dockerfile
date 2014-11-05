@@ -5,20 +5,20 @@ MAINTAINER l3iggs <l3iggs@live.com>
 # update
 RUN pacman -Suy --noconfirm
 
-# setup git
-RUN pacman -Suy --noconfirm git
-RUN git config --global user.email "buildbot@none.com"
-RUN git config --global user.name "Build Bot"
-
 # setup yaourt
 RUN pacman -Suy --noconfirm --needed base-devel
 ADD https://aur.archlinux.org/packages/pa/package-query/package-query.tar.gz /root/
-RUN tar -x /root/package-query.tar.gz /root/
+RUN tar -x /root/*.tar.gz /root/
 RUN cd /root/package-query && makepkg -s --noconfirm
 RUN pacman -U --noconfirm /root/package-query/package-query.pkg.tar.xz
 ADD https://aur.archlinux.org/packages/ya/yaourt/yaourt.tar.gz /root/
 
 RUN pacman -Suy --noconfirm package-query
+
+# git
+RUN pacman -Suy --noconfirm git
+RUN git config --global user.email "buildbot@none.com"
+RUN git config --global user.name "Build Bot"
 
 
 # Build deps
