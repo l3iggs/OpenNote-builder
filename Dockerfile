@@ -59,7 +59,9 @@ RUN /root/create_mysql_admin_user.sh
 RUN sed -i 's,#LoadModule ssl_module modules/mod_ssl.so,LoadModule ssl_module modules/mod_ssl.so\nLoadModule php5_module modules/libphp5.so,g' /etc/httpd/conf/httpd.conf
 RUN sed -i 's,LoadModule mpm_event_module modules/mod_mpm_event.so,LoadModule mpm_prefork_module modules/mod_mpm_prefork.so,g' /etc/httpd/conf/httpd.conf
 RUN sed -i 's,;extension=pdo_mysql.so,extension=pdo_mysql.so,g' /etc/php/php.ini
-RUN cp -r -H /app /srv/http/notes
+RUN rm /app/Service/Config.*
+RUN rm /app/Service/install.php
+RUN cp -r -H /app /srv/http
 RUN sudo chown -R http:http /srv/http
 
 CMD apachectl start & sleep 2
