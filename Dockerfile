@@ -8,7 +8,7 @@ RUN pacman -Suy --noconfirm
 # setup yaourt
 RUN pacman -Suy --noconfirm --needed base-devel
 ADD https://aur.archlinux.org/packages/pa/package-query/package-query.tar.gz /root/
-RUN tar -vxf /root/package-query.tar.gz
+RUN tar -vxf /root/package-query.tar.gz -C /root/
 RUN cd /root/package-query && makepkg -s --noconfirm
 RUN pacman -U --noconfirm /root/package-query/package-query.pkg.tar.xz
 ADD https://aur.archlinux.org/packages/ya/yaourt/yaourt.tar.gz /root/
