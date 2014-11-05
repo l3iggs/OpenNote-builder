@@ -45,6 +45,8 @@ RUN grunt
 # Install runtime deps
 RUN pacman -Suy --noconfirm --needed apache php php-apache mariadb pwgen
 
+USER mysql
+RUN /usr/bin/mysqld --pid-file=/run/mysqld/mysqld.pid
 # setup mysql
 #RUN ["/usr/bin/su", "mysql", "-c", "/usr/bin/mysqld --pid-file=/run/mysqld/mysqld.pid"]
 #RUN su mysql -c "mysqld-post"
