@@ -48,4 +48,4 @@ RUN pacman -Suy --noconfirm apache php php-apache mariadb
 
 # Prepare for run
 RUN sed -i 's,#LoadModule ssl_module modules/mod_ssl.so,LoadModule ssl_module modules/mod_ssl.so\nLoadModule modules/libphp5.so,g' /etc/httpd/conf/httpd.conf
-RUN systemctl restart httpd
+#RUN systemctl restart httpd
