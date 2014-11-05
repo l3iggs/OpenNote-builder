@@ -19,5 +19,5 @@ RUN unzip /root/master.zip -d /root/
 RUN rm /root/master.zip
 
 # Build
-WORKDIR /root/OpenNote/OpenNote
+WORKDIR /root/OpenNote-master/OpenNote
 #RUN grunt
