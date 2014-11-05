@@ -43,9 +43,18 @@ RUN sed -i 's/"bower install"/"bower --allow-root install"/g' Gruntfile.js
 RUN grunt
 
 # Install runtime deps
-RUN pacman -Suy --noconfirm --needed apache php php-apache mariadb
+RUN pacman -Suy --noconfirm --needed apache php php-apache mariadb pwgen
 
-# Prepare for run
-RUN sed -i 's,#LoadModule ssl_module modules/mod_ssl.so,LoadModule ssl_module modules/mod_ssl.so\nLoadModule php5_module modules/libphp5.so,g' /etc/httpd/conf/httpd.conf
-RUN sed -i 's,LoadModule mpm_event_module modules/mod_mpm_event.so,LoadModule mpm_prefork_module modules/mod_mpm_prefork.so,g' /etc/httpd/conf/httpd.conf
-RUN apachectl start
+# setup mysql
+RUN su mysql -c "mysqld"
+RUN su mysql -c "mysqld-post"
+
+
+# setup apache with php and mysql enabled
+#RUN sed -i 's,#LoadModule ssl_module modules/mod_ssl.so,LoadModule ssl_module modules/mod_ssl.so\nLoadModule php5_module modules/libphp5.so,g' /etc/httpd/conf/httpd.conf
+#RUN sed -i 's,LoadModule mpm_event_module modules/mod_mpm_event.so,LoadModule mpm_prefork_module modules/mod_mpm_prefork.so,g' /etc/httpd/conf/httpd.conf
+#RUN sed -i 's,;extension=pdo_mysql.so,extension=pdo_mysql.so' /etc/php/php.ini
+
+
+
+#RUN apachectl start
