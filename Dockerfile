@@ -28,5 +28,5 @@ RUN grunt
 RUN pacman -Suy --noconfirm apache php php-apache mariadb
 
 # Prepare for run
-RUN a2enmod php5 ssl
-RUN systemctl restart apache
+#RUN a2enmod php5 ssl
+#RUN systemctl restart apache
