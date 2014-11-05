@@ -36,6 +36,10 @@ ADD https://github.com/FoxUSA/OpenNoteService-PHP/archive/master.zip /root/
 RUN unzip /root/master.zip -d /root/
 RUN rm /root/master.zip
 
+# setup some links
+RUN ln -s /root/OpenNoteService-PHP-master/Service /root/OpenNote-master/OpenNote/Service
+RUN ln -s /root/OpenNote-master/OpenNote /app
+
 # Build
 WORKDIR /root/OpenNote-master/
 RUN npm install
@@ -45,10 +49,7 @@ RUN grunt
 # Install runtime deps
 RUN pacman -Suy --noconfirm --needed apache php php-apache mariadb pwgen
 
-# setup mysql
-RUN mkdir /app
-RUN ln -s /root/OpenNoteService-PHP-master/Service /root/OpenNote-master/OpenNote/Service
-RUN ln -s /root/OpenNote-master/OpenNote /app
+
 ADD https://raw.githubusercontent.com/FoxUSA/OpenNote-Docker/master/create_mysql_admin_user.sh /root/
 
 
