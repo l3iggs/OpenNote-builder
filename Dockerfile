@@ -41,7 +41,7 @@ RUN ln -s /root/OpenNoteService-PHP-master/Service /root/OpenNote-master/OpenNot
 RUN ln -s /root/OpenNote-master/OpenNote /app
 
 # Compose OpenNoteService
-cd /root/OpenNoteService-PHP-master && composer install
+RUN cd /root/OpenNoteService-PHP-master && composer install
 
 # Build OneNote
 RUN cd /root/OpenNote-master && npm install
