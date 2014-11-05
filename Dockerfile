@@ -47,26 +47,20 @@ RUN sed -i 's/"bower install"/"bower --allow-root install"/g' Gruntfile.js
 RUN grunt
 
 # Install runtime deps
-RUN pacman -Suy --noconfirm --needed apache php php-apache mariadb pwgen
+RUN pacman -Suy --noconfirm --needed apache php php-apache mariadb
 
-
+# setup mysql
+RUN pacman -Suy --noconfirm -needed pwgen
 ADD https://raw.githubusercontent.com/FoxUSA/OpenNote-Docker/master/create_mysql_admin_user.sh /root/
+RUN chmod +x /root/create_mysql_admin_user.sh
+RUN /root/create_mysql_admin_user.sh
 
+# setup apache with ssl, php and mysql enabled
+RUN sed -i 's,#LoadModule ssl_module modules/mod_ssl.so,LoadModule ssl_module modules/mod_ssl.so\nLoadModule php5_module modules/libphp5.so,g' /etc/httpd/conf/httpd.conf
+RUN sed -i 's,LoadModule mpm_event_module modules/mod_mpm_event.so,LoadModule mpm_prefork_module modules/mod_mpm_prefork.so,g' /etc/httpd/conf/httpd.conf
+RUN sed -i 's,;extension=pdo_mysql.so,extension=pdo_mysql.so' /etc/php/php.ini
+RUN ln -s /app /srv/http/notes
 
-#USER mysql
-#RUN mysqld & sleep 5
-#RUN mysqld-post & sleep 1
-#USER root
+RUN apachectl start & sleep 2
 
-#RUN ["/usr/bin/su", "mysql", "-c", "/usr/bin/mysqld --pid-file=/run/mysqld/mysqld.pid"]
-#RUN su mysql -c "mysqld-post"
-
-
-# setup apache with php and mysql enabled
-#RUN sed -i 's,#LoadModule ssl_module modules/mod_ssl.so,LoadModule ssl_module modules/mod_ssl.so\nLoadModule php5_module modules/libphp5.so,g' /etc/httpd/conf/httpd.conf
-#RUN sed -i 's,LoadModule mpm_event_module modules/mod_mpm_event.so,LoadModule mpm_prefork_module modules/mod_mpm_prefork.so,g' /etc/httpd/conf/httpd.conf
-#RUN sed -i 's,;extension=pdo_mysql.so,extension=pdo_mysql.so' /etc/php/php.ini
-
-
-
-#RUN apachectl start
+CMD while true; sleep 2; done
