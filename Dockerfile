@@ -71,6 +71,6 @@ RUN sudo chown -R http:http /srv/http
 RUN chmod -R 755 /srv/http
 
 
-CMD mysqld_safe && apachectl start
+CMD mysqld_safe & apachectl start
 
 #CMD while true; sleep 2; done
