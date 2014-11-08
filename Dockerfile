@@ -56,7 +56,7 @@ RUN pacman -Suy --noconfirm --needed apache php php-apache mariadb
 RUN pacman -Suy --noconfirm --needed pwgen
 ADD create_mysql_admin_user.sh /root/create_mysql_admin_user.sh
 RUN chmod +x /root/create_mysql_admin_user.sh
-#RUN /root/create_mysql_admin_user.sh
+RUN /root/create_mysql_admin_user.sh
 
 # setup apache with ssl, php and mysql enabled
 RUN sed -i 's,#LoadModule ssl_module modules/mod_ssl.so,LoadModule ssl_module modules/mod_ssl.so\nLoadModule php5_module modules/libphp5.so,g' /etc/httpd/conf/httpd.conf
@@ -71,6 +71,6 @@ RUN sudo chown -R http:http /srv/http
 RUN chmod -R 755 /srv/http
 
 
-CMD /root/create_mysql_admin_user.sh & apachectl start
+CMD mysqld_safe && apachectl start
 
 #CMD while true; sleep 2; done
