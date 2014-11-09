@@ -23,30 +23,33 @@ RUN pacman -Suy --noconfirm --needed git
 RUN git config --global user.email "buildbot@none.com"
 RUN git config --global user.name "Build Bot"
 
+# setup deps
+RUN pacman -Suy --noconfirm --needed zip unzip
 
 # Build deps
-RUN pacman -Suy --noconfirm --needed nodejs unzip
+RUN pacman -Suy --noconfirm --needed nodejs
 RUN yaourt -Suya --noconfirm --needed nodejs-bower nodejs-grunt-cli php-composer
 
 # get source code
 RUN cd /root; git clone https://github.com/FoxUSA/OpenNote.git
-#RUN cd /root/OpenNote; git checkout 14.07.02
-RUN cd /root; git clone https://github.com/l3iggs/OpenNoteService-PHP.git
-RUN cd /root/OpenNoteService-PHP; git checkout patch-1
-#RUN cd /root/OpenNoteService-PHP; git checkout 14.07.01
+RUN cd /root/OpenNote; git checkout 14.07.02
+RUN cd /root; git clone https://github.com/FoxUSA/OpenNoteService-PHP.git
+RUN cd /root/OpenNoteService-PHP; git checkout 14.07.01
+#RUN cd /root/OpenNoteService-PHP; git checkout patch-1
 
 # Compose OpenNoteService
 RUN cd /root/OpenNoteService-PHP && composer install
 
-# setup some links
-RUN ln -s /root/OpenNoteService-PHP/Service /root/OpenNote/OpenNote/.
-RUN ln -s /root/OpenNoteService-PHP/vendor /root/OpenNote/OpenNote/.
-RUN ln -s /root/OpenNote/OpenNote /app
+# copy over service
+RUN cp -R /root/OpenNoteService-PHP/* /root/OpenNote/OpenNote/.
 
 # Build OneNote
 RUN cd /root/OpenNote && npm install
 RUN sed -i 's/"bower install"/"bower --allow-root install"/g' /root/OpenNote/Gruntfile.js
 RUN cd /root/OpenNote && grunt
+
+# package up
+RUN zip -r /openNote.zip /root/OpenNote
 
 # Install runtime deps
 RUN pacman -Suy --noconfirm --needed apache php php-apache mariadb
@@ -56,6 +59,7 @@ RUN pacman -Suy --noconfirm --needed pwgen
 ADD create_mysql_admin_user.sh /root/create_mysql_admin_user.sh
 RUN chmod +x /root/create_mysql_admin_user.sh
 ENV MYSQL_PASS tacobell
+RUN ln -s /root/OpenNote/OpenNote /app
 RUN /root/create_mysql_admin_user.sh
 
 # setup apache with ssl, php and mysql enabled
