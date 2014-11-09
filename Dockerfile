@@ -30,9 +30,9 @@ RUN yaourt -Suya --noconfirm --needed nodejs-bower nodejs-grunt-cli php-composer
 
 # get source code
 RUN cd /root; git clone https://github.com/FoxUSA/OpenNote.git
-RUN cd /root/OpenNote; git checkout 14.07.02
+#RUN cd /root/OpenNote; git checkout 14.07.02
 RUN cd /root; git clone https://github.com/FoxUSA/OpenNoteService-PHP.git
-RUN cd /root/OpenNoteService-PHP; git checkout 14.07.01
+#RUN cd /root/OpenNoteService-PHP; git checkout 14.07.01
 
 # Compose OpenNoteService
 RUN cd /root/OpenNoteService-PHP && composer install
