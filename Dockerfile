@@ -64,9 +64,9 @@ RUN sed -i 's,#LoadModule ssl_module modules/mod_ssl.so,LoadModule ssl_module mo
 RUN sed -i 's,LoadModule mpm_event_module modules/mod_mpm_event.so,LoadModule mpm_prefork_module modules/mod_mpm_prefork.so,g' /etc/httpd/conf/httpd.conf
 RUN echo "Include conf/extra/php5_module.conf" >> /etc/httpd/conf/httpd.conf
 RUN sed -i 's,;extension=pdo_mysql.so,extension=pdo_mysql.so,g' /etc/php/php.ini
-#RUN rm /app/Service/Config.template
-#RUN rm /app/Service/install.php
-#ADD Config.php /app/Service/Config.php
+RUN rm /app/Service/Config.template
+RUN rm /app/Service/install.php
+ADD Config.php /app/Service/Config.php
 RUN cp -r -L /app /srv/http/notes
 RUN sudo chown -R http:http /srv/http
 RUN chmod -R 755 /srv/http
