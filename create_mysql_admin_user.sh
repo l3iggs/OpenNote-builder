@@ -20,6 +20,7 @@ mysql -uroot -e "GRANT ALL PRIVILEGES ON *.* TO 'root'@'%'"
 
 echo "CREATE DATABASE OpenNote" | mysql -u root
 mysql -u root OpenNote < /app/Service/model/sql/notebook.sql
+mysql -uroot -e "SET PASSWORD = PASSWORD('tacobell');"
 
 echo "=> Done!"
 
