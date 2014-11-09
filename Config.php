@@ -36,8 +36,8 @@
 				 */
 				private static function mysqlConfig(){			
 					//mysql
-						$dbUserName = "root";
-						$dbPassword = null;
+						$dbUserName = "admin";
+						$dbPassword = "tacobell";
 						$dbServer = "localhost";
 						$dbName = "OpenNote";
 						
