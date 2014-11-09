@@ -49,7 +49,7 @@ RUN sed -i 's/"bower install"/"bower --allow-root install"/g' /root/OpenNote/Gru
 RUN cd /root/OpenNote && grunt
 
 # package up
-RUN zip -r /openNote.zip /root/OpenNote/OpenNote/*
+RUN cd /root/OpenNote/OpenNote/ zip -r /openNote.zip .
 
 # Install runtime deps
 RUN pacman -Suy --noconfirm --needed apache php php-apache mariadb
