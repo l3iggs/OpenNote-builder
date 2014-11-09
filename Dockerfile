@@ -69,7 +69,7 @@ RUN cp -r -L /app /srv/http/notes
 RUN sudo chown -R http:http /srv/http
 RUN chmod -R 755 /srv/http
 
-#RUN /root/create_mysql_admin_user.sh
+RUN /root/create_mysql_admin_user.sh
 CMD mysqld_safe & apachectl start
 
 #CMD while true; sleep 2; done
