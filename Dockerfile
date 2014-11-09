@@ -29,25 +29,23 @@ RUN pacman -Suy --noconfirm --needed nodejs unzip
 RUN yaourt -Suya --noconfirm --needed nodejs-bower nodejs-grunt-cli php-composer
 
 # get source code
-ADD https://github.com/FoxUSA/OpenNote/archive/master.zip /root/
-RUN unzip /root/master.zip -d /root/
-RUN rm /root/master.zip
-ADD https://github.com/FoxUSA/OpenNoteService-PHP/archive/master.zip /root/
-RUN unzip /root/master.zip -d /root/
-RUN rm /root/master.zip
+RUN cd /root; git clone https://github.com/FoxUSA/OpenNote.git
+RUN cd /root/OpenNote; git checkout 14.07.02
+RUN cd /root; git clone https://github.com/FoxUSA/OpenNoteService-PHP.git
+RUN cd /root/OpenNoteService-PHP; git checkout 14.07.01
 
 # Compose OpenNoteService
-RUN cd /root/OpenNoteService-PHP-master && composer install
+RUN cd /root/OpenNoteService-PHP && composer install
 
 # setup some links
-RUN ln -s /root/OpenNoteService-PHP-master/Service /root/OpenNote-master/OpenNote/.
-RUN ln -s /root/OpenNoteService-PHP-master/vendor /root/OpenNote-master/OpenNote/.
-RUN ln -s /root/OpenNote-master/OpenNote /app
+RUN ln -s /root/OpenNoteService-PHP/Service /root/OpenNote/OpenNote/.
+RUN ln -s /root/OpenNoteService-PHP/vendor /root/OpenNote/OpenNote/.
+RUN ln -s /root/OpenNote/OpenNote /app
 
 # Build OneNote
-RUN cd /root/OpenNote-master && npm install
-RUN sed -i 's/"bower install"/"bower --allow-root install"/g' /root/OpenNote-master/Gruntfile.js
-RUN cd /root/OpenNote-master && grunt
+RUN cd /root/OpenNote && npm install
+RUN sed -i 's/"bower install"/"bower --allow-root install"/g' /root/OpenNote/Gruntfile.js
+RUN cd /root/OpenNote && grunt
 
 # Install runtime deps
 RUN pacman -Suy --noconfirm --needed apache php php-apache mariadb
