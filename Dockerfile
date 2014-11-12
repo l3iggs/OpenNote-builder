@@ -39,17 +39,21 @@ RUN cd /root; git clone https://github.com/FoxUSA/OpenNoteService-PHP.git
 # Compose OpenNoteService
 RUN cd /root/OpenNoteService-PHP && composer install
 
-# copy over service
-RUN cp -R /root/OpenNoteService-PHP/Service /root/OpenNote/OpenNote/.
-RUN cp -R /root/OpenNoteService-PHP/vendor /root/OpenNote/OpenNote/.
+# move over files from service repo
+RUN mv /root/OpenNoteService-PHP/* /root/OpenNote/OpenNote/.
 
-# Build OneNote
+# Build OpenNote
 RUN cd /root/OpenNote && npm install
 RUN sed -i 's/"bower install"/"bower --allow-root install"/g' /root/OpenNote/Gruntfile.js
 RUN cd /root/OpenNote && grunt
 
-# package up
-RUN cd /root/OpenNote/OpenNote/; zip -r /openNote.zip .
+# the build is done. package it up now
+#RUN rm -rf /root/OpenNote/
+RUN cd /root/OpenNote/OpenNote/; zip -r /OpenNote.zip .
+
+# extract opennote
+RUN mkdir /app
+RUN unzip /OpenNote.zip /app
 
 # Install runtime deps
 RUN pacman -Suy --noconfirm --needed apache php php-apache mariadb
@@ -59,7 +63,6 @@ RUN pacman -Suy --noconfirm --needed pwgen
 ADD create_mysql_admin_user.sh /root/create_mysql_admin_user.sh
 RUN chmod +x /root/create_mysql_admin_user.sh
 ENV MYSQL_PASS tacobell
-RUN ln -s /root/OpenNote/OpenNote /app
 RUN /root/create_mysql_admin_user.sh
 
 # setup apache with ssl, php and mysql enabled
@@ -70,7 +73,7 @@ RUN sed -i 's,;extension=pdo_mysql.so,extension=pdo_mysql.so,g' /etc/php/php.ini
 RUN rm /app/Service/Config.template
 RUN rm /app/Service/install.php
 ADD Config.php /app/Service/Config.php
-RUN cp -r -L /app /srv/http/notes
+RUN mv /app /srv/http/notes
 RUN sudo chown -R http:http /srv/http
 RUN chmod -R 755 /srv/http
 
