@@ -86,7 +86,7 @@ ENV MYSQL_PASS tacobell
 
 # Set permissions
 RUN chmod 755 /app -R
-RUN chown www-data:www-data /app -R
+RUN chown http:http /app -R
 
 # link to served directory
 RUN ln -s /app /srv/http/notes
