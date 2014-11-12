@@ -66,27 +66,33 @@ RUN sed -i 's,LoadModule mpm_event_module modules/mod_mpm_event.so,LoadModule mp
 RUN echo "Include conf/extra/php5_module.conf" >> /etc/httpd/conf/httpd.conf
 RUN sed -i 's,;extension=pdo_mysql.so,extension=pdo_mysql.so,g' /etc/php/php.ini
 
-# setup mysql
-RUN pacman -Suy --noconfirm --needed pwgen
-ADD create_mysql_admin_user.sh /root/create_mysql_admin_user.sh
-RUN chmod +x /root/create_mysql_admin_user.sh
-ENV MYSQL_PASS tacobell
-
 # extract opennote package
 RUN mkdir /app
 #ADD https://github.com/FoxUSA/OpenNote/releases/download/14.07.02/OpenNote.zip /
 RUN unzip /OpenNote.zip -d /app/
 
+# Clean up
+RUN rm /app/Service/Config.*
+RUN rm /app/Service/install.php
+
+# Add pre-made config and setup script
+ADD Config.php /app/Service/
+
+# mysql setup script
+RUN pacman -Suy --noconfirm --needed pwgen
+ADD create_mysql_admin_user.sh /root/create_mysql_admin_user.sh
+RUN chmod +x /root/create_mysql_admin_user.sh
+ENV MYSQL_PASS tacobell
+
+# Set permissions
+RUN chmod 755 /app -R
+RUN chown www-data:www-data /app -R
+
+# link to served directory
+RUN ln -s /app /srv/http/notes
+
 # create admin user and populate database
 RUN /root/create_mysql_admin_user.sh
-
-# clean up and install to server directory
-RUN rm /app/Service/Config.template
-RUN rm /app/Service/install.php
-ADD Config.php /app/Service/Config.php
-RUN mv /app /srv/http/notes
-RUN sudo chown -R http:http /srv/http
-RUN chmod -R 755 /srv/http
 
 # start mysql and apache servers
 CMD mysqld_safe & apachectl start
