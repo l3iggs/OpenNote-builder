@@ -89,12 +89,12 @@ RUN chmod +x /root/create_mysql_admin_user.sh
 RUN chmod 755 /app -R
 RUN chown http:http /app -R
 
-# create admin user and populate database
+# setup mysql populate database
 WORKDIR /usr
-RUN mysql_install_db --user=mysql --ldata=/var/lib/mysql/
-#RUN mysql_install_db
-#RUN cd '.' ; ./bin/mysqld_safe --datadir='./data'
-#RUN mysql -u root OpenNote < /app/Service/model/sql/notebook.sql
+RUN mysql_install_db --user=mysql --ldata=/var/lib/mysql
+RUN cd '.' ; ./bin/mysqld_safe --datadir='/var/lib/mysql'
+RUN mysql -u root OpenNote < /app/Service/model/sql/notebook.sql
+RUN mysql_waitpid $(cat /var/lib/mysql/*.pid) 10
 
 #RUN /root/create_mysql_admin_user.sh
 
@@ -102,4 +102,4 @@ RUN mysql_install_db --user=mysql --ldata=/var/lib/mysql/
 RUN mv /app /srv/http/notes
 
 # start mysql and apache servers
-CMD apachectl start; cd '.' ; ./bin/mysqld_safe --datadir='./data'
+CMD apachectl start; cd '.' ; ./bin/mysqld_safe --datadir='/var/lib/mysql'
