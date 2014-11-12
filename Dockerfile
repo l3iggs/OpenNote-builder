@@ -48,7 +48,13 @@ RUN sed -i 's/"bower install"/"bower --allow-root install"/g' /root/OpenNote/Gru
 RUN cd /root/OpenNote && grunt build
 
 # the build is now done. package it up
-#RUN rm -rf /root/OpenNote/
+RUN rm -rf /root/OpenNote/OpenNote/.gitignore
+RUN rm -rf /root/OpenNote/OpenNote/.project
+RUN rm -rf /root/OpenNote/OpenNote/Doc
+RUN rm -rf /root/OpenNote/OpenNote/License.txt
+RUN rm -rf /root/OpenNote/OpenNote/README.md
+RUN rm -rf /root/OpenNote/OpenNote/Service.test
+RUN rm -rf /root/OpenNote/OpenNote/composer*
 RUN cd /root/OpenNote/OpenNote/; zip -r /OpenNote.zip .
 
 # Install runtime deps
