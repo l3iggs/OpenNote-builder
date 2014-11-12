@@ -31,9 +31,9 @@ RUN pacman -Suy --noconfirm --needed nodejs
 RUN yaourt -Suya --noconfirm --needed nodejs-bower nodejs-grunt-cli php-composer
 
 # get source code
-RUN cd /root; git clone https://github.com/FoxUSA/OpenNote.git
+ADD OpenNote /root/
 #RUN cd /root/OpenNote; git checkout 14.07.02
-RUN cd /root; git clone https://github.com/FoxUSA/OpenNoteService-PHP.git
+ADD OpenNoteService-PHP /root/
 #RUN cd /root/OpenNoteService-PHP; git checkout 14.07.01
 
 # Compose OpenNoteService
@@ -53,7 +53,7 @@ RUN cd /root/OpenNote/OpenNote/; zip -r /OpenNote.zip .
 
 # extract opennote
 RUN mkdir /app
-RUN unzip /OpenNote.zip /app
+RUN unzip /OpenNote.zip /app/
 
 # Install runtime deps
 RUN pacman -Suy --noconfirm --needed apache php php-apache mariadb
