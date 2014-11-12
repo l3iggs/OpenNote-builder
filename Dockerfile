@@ -88,11 +88,11 @@ ENV MYSQL_PASS tacobell
 RUN chmod 755 /app -R
 RUN chown http:http /app -R
 
-# link to served directory
-RUN ln -s /app /srv/http/notes
-
 # create admin user and populate database
 RUN /root/create_mysql_admin_user.sh
+
+# move to served directory
+RUN mv /app /srv/http/notes
 
 # start mysql and apache servers
 CMD mysqld_safe & apachectl start
