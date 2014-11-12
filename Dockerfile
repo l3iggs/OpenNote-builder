@@ -31,16 +31,16 @@ RUN pacman -Suy --noconfirm --needed nodejs
 RUN yaourt -Suya --noconfirm --needed nodejs-bower nodejs-grunt-cli php-composer
 
 # get source code
-ADD OpenNote/ /root/
+ADD OpenNote .
 #RUN cd /root/OpenNote; git checkout 14.07.02
-ADD OpenNoteService-PHP/ /root/
+ADD OpenNoteService-PHP .
 #RUN cd /root/OpenNoteService-PHP; git checkout 14.07.01
 
 # Compose OpenNoteService
-RUN cd /root/OpenNoteService-PHP && composer install
+RUN cd /OpenNoteService-PHP && composer install
 
 # move over files from service repo
-RUN mv /root/OpenNoteService-PHP/* /root/OpenNote/OpenNote/.
+RUN mv /OpenNoteService-PHP/* /OpenNote/OpenNote/.
 
 # Build OpenNote
 RUN cd /root/OpenNote && npm install
