@@ -68,7 +68,8 @@ RUN sed -i 's,;extension=pdo_mysql.so,extension=pdo_mysql.so,g' /etc/php/php.ini
 
 # extract opennote package
 RUN mkdir /app
-#ADD https://github.com/FoxUSA/OpenNote/releases/download/14.07.02/OpenNote.zip /
+RUN rm /OpenNote.zip
+ADD https://github.com/FoxUSA/OpenNote/releases/download/14.07.02/OpenNote.zip /
 RUN unzip /OpenNote.zip -d /app/
 
 # Clean up
