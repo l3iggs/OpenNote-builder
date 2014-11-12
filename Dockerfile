@@ -83,17 +83,19 @@ ADD Config.php /app/Service/
 RUN pacman -Suy --noconfirm --needed pwgen
 ADD create_mysql_admin_user.sh /root/create_mysql_admin_user.sh
 RUN chmod +x /root/create_mysql_admin_user.sh
-ENV MYSQL_PASS tacobell
+#ENV MYSQL_PASS tacobell
 
 # Set permissions
 RUN chmod 755 /app -R
 RUN chown http:http /app -R
 
 # create admin user and populate database
+WORKDIR /usr
+RUN mysql_install_db
 RUN /root/create_mysql_admin_user.sh
 
-# move to served directory
+# move app to served directory
 RUN mv /app /srv/http/notes
 
 # start mysql and apache servers
-CMD apachectl start; mysqld_safe
+CMD apachectl start; cd '.' ; ./bin/mysqld_safe --datadir='./data'
