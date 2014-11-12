@@ -7,7 +7,7 @@ Usage:
 ```bash
 git clone https://github.com/l3iggs/OpenNote-builder.git
 cd OpenNote-builder
-git pull; git submodule update --init; docker build .
+git pull; git submodule update --init; docker build -t opennote .
 ```
 
 Requires docker and git.
