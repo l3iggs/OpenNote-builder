@@ -7,7 +7,9 @@ Usage:
 ```bash
 git clone https://github.com/l3iggs/OpenNote-builder.git
 cd OpenNote-builder
-git pull; chmod +x buildme.sh; ./buildme.sh
+git pull
+git submodule update --init
+docker build .
 ```
 
-Requires bash, docker and git.
+Requires docker and git.
