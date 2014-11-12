@@ -92,8 +92,10 @@ RUN chown http:http /app -R
 # create admin user and populate database
 WORKDIR /usr
 RUN mysql_install_db
-RUN cd '.' ; ./bin/mysqld_safe --datadir='./data'
-RUN /root/create_mysql_admin_user.sh
+#RUN cd '.' ; ./bin/mysqld_safe --datadir='./data'
+#RUN mysql -u root OpenNote < /app/Service/model/sql/notebook.sql
+
+#RUN /root/create_mysql_admin_user.sh
 
 # move app to served directory
 RUN mv /app /srv/http/notes
