@@ -45,7 +45,6 @@ RUN mv /root/OpenNoteService-PHP/* /root/OpenNote/OpenNote/.
 # Build OpenNote
 RUN cd /root/OpenNote && npm install
 RUN sed -i 's/"bower install"/"bower --allow-root install"/g' /root/OpenNote/Gruntfile.js
-RUN rm /root/.gitconfig
 RUN cd /root/OpenNote && grunt build
 
 # the build is done. package it up now
