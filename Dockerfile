@@ -53,7 +53,7 @@ RUN cd /root/OpenNote/OpenNote/; zip -r /OpenNote.zip .
 
 # extract opennote
 RUN mkdir /app
-RUN unzip /OpenNote.zip /app/
+RUN unzip /OpenNote.zip -d /app/
 
 # Install runtime deps
 RUN pacman -Suy --noconfirm --needed apache php php-apache mariadb
