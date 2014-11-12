@@ -95,4 +95,4 @@ RUN /root/create_mysql_admin_user.sh
 RUN mv /app /srv/http/notes
 
 # start mysql and apache servers
-CMD apachectl start & mysqld_safe
+CMD apachectl start; mysqld_safe
