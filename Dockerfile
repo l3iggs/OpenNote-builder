@@ -93,6 +93,7 @@ RUN chown http:http /app -R
 WORKDIR /usr
 RUN mysql_install_db --user=mysql --ldata=/var/lib/mysql
 #RUN cd '.' ; ./bin/mysqld_safe --datadir='/var/lib/mysql' & sleep 2
+#RUN mysql -u root -e "CREATE DATABASE OpenNote"
 #RUN mysql -u root OpenNote < /app/Service/model/sql/notebook.sql
 #RUN mysql_waitpid $(cat /var/lib/mysql/*.pid) 10
 
