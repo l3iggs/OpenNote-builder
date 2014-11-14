@@ -103,7 +103,7 @@ RUN unzip /OpenNote.zip -d /app/
 
 # sqlite setup
 RUN sed -i 's,//return self::sqliteConfig();,return self::sqliteConfig();,g' /app/Service/Config.php
-
+RUN sed -i 's,return self::mysqlConfig();,//return self::mysqlConfig();,g' /app/Service/Config.php
 
 # Set permissions
 RUN chmod 755 /app -R
