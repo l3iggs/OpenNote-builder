@@ -44,6 +44,8 @@ RUN sed -i 's,mysql.default_host =,mysql.default_host = localhost,g' /etc/php/ph
 RUN sed -i 's,mysql.default_user =,mysql.default_user = root,g' /etc/php/php.ini
 RUN sed -i 's,mysql.default_password =,mysql.default_password = tacobell,g' /etc/php/php.ini
 
+RUN sed -i 's,;extension=openssl.so,extension=openssl.so,g' /etc/php/php.ini
+
 RUN sed -i 's,;extension=sqlite3.so,extension=sqlite3.so,g' /etc/php/php.ini
 RUN sed -i 's,;extension=pdo_sqlite.so,extension=pdo_sqlite.so,g' /etc/php/php.ini
 
