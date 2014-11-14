@@ -39,12 +39,12 @@ RUN echo "Include conf/extra/php5_module.conf" >> /etc/httpd/conf/httpd.conf
 
 RUN sed -i 's,;extension=pdo_mysql.so,extension=pdo_mysql.so,g' /etc/php/php.ini
 #RUN sed -i 's,;extension=mysqli.so,extension=mysqli.so,g' /etc/php/php.ini
-RUN sed -i 's,mysql.trace_mode = Off,mysql.trace_mode = On' /etc/php/php.ini
-RUN sed -i 's,mysql.default_host =,mysql.default_host = localhost' /etc/php/php.ini
-RUN sed -i 's,mysql.default_user =,mysql.default_user = root' /etc/php/php.ini
-RUN sed -i 's,mysql.default_password =,mysql.default_password = tacobell' /etc/php/php.ini
+RUN sed -i 's,mysql.trace_mode = Off,mysql.trace_mode = On,g' /etc/php/php.ini
+RUN sed -i 's,mysql.default_host =,mysql.default_host = localhost,g' /etc/php/php.ini
+RUN sed -i 's,mysql.default_user =,mysql.default_user = root,g' /etc/php/php.ini
+RUN sed -i 's,mysql.default_password =,mysql.default_password = tacobell,g' /etc/php/php.ini
 
-RUN sed -i 's,;extension=sqlite3.so,extension=sqlite3.so' /etc/php/php.ini
+RUN sed -i 's,;extension=sqlite3.so,extension=sqlite3.so,g' /etc/php/php.ini
 
 # setup deps
 RUN pacman -Suy --noconfirm --needed zip unzip
