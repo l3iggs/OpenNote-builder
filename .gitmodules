@@ -1,6 +1,8 @@
 [submodule "OpenNote"]
 	path = OpenNote
-	url = https://github.com/FoxUSA/OpenNote.git
+	#url = https://github.com/FoxUSA/OpenNote.git
+	url = https://github.com/l3iggs/OpenNote.git
 [submodule "OpenNoteService-PHP"]
 	path = OpenNoteService-PHP
-	url = https://github.com/FoxUSA/OpenNoteService-PHP.git
+	#url = https://github.com/FoxUSA/OpenNoteService-PHP.git
+	url = https://github.com/l3iggs/OpenNoteService-PHP.git
