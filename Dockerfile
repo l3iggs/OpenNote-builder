@@ -83,7 +83,7 @@ RUN cd /root/OpenNote/OpenNote/; zip -r /OpenNote.zip .
 
 # extract opennote package
 RUN mkdir /app
-#ADD https://github.com/FoxUSA/OpenNote/releases/download/14.07.02/OpenNote.zip /
+ADD https://github.com/FoxUSA/OpenNote/releases/download/14.07.02/OpenNote.zip /
 RUN unzip /OpenNote.zip -d /app/
 
 # Clean up
