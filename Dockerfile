@@ -102,8 +102,9 @@ RUN unzip /OpenNote.zip -d /app/
 #ENV MYSQL_PASS tacobell
 
 # sqlite setup
+RUN sed -i 's,//return self::sqliteConfig();,return self::sqliteConfig();,g' /app/Service/Config.php
+RUN sed -i 's,return self::mysqlConfig();,//return self::mysqlConfig();,g' /app/Service/Config.php
 RUN sed -i 's,//return self::sqliteConfig();,return self::sqliteConfig();,g' /app/Service/Config.template
-#RUN sed -i 's,return self::mysqlConfig();,//return self::mysqlConfig();,g' /app/Service/Config.php
 RUN sed -i 's,sqlite:%s\%s,sqlite:%s/%s,g' /app/Service/Config.template
 
 # Set permissions
