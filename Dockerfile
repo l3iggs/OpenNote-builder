@@ -85,7 +85,7 @@ RUN cd /root/OpenNote/OpenNote/; zip -r /OpenNote.zip .
 
 # extract opennote package
 RUN mkdir /app
-ADD https://github.com/FoxUSA/OpenNote/releases/download/14.07.02/OpenNote.zip /
+#ADD https://github.com/FoxUSA/OpenNote/releases/download/14.07.02/OpenNote.zip /
 RUN unzip /OpenNote.zip -d /app/
 
 # Clean up
@@ -106,7 +106,7 @@ RUN chmod 755 /app -R
 RUN chown http:http /app -R
 
 # setup mysql populate database
-WORKDIR /usr
+#WORKDIR /usr
 #RUN mysql_install_db --user=mysql --ldata=/var/lib/mysql
 #RUN cd '.' ; ./bin/mysqld_safe --datadir='/var/lib/mysql' & sleep 5
 #RUN mysql -u root -e "CREATE DATABASE OpenNote"
