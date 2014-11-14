@@ -89,7 +89,7 @@ RUN mkdir /app
 RUN unzip /OpenNote.zip -d /app/
 
 # Clean up
-#RUN rm /app/Service/Config.*
+#RUN rm /app/Service/Config.template
 #RUN rm /app/Service/install.php
 
 # Add pre-made config and setup script
@@ -100,6 +100,10 @@ RUN unzip /OpenNote.zip -d /app/
 #ADD create_mysql_admin_user.sh /root/create_mysql_admin_user.sh
 #RUN chmod +x /root/create_mysql_admin_user.sh
 #ENV MYSQL_PASS tacobell
+
+# sqlite setup
+RUN sed -i 's,//return self::sqliteConfig();,return self::sqliteConfig();,g' /app/Service/Config.php
+
 
 # Set permissions
 RUN chmod 755 /app -R
