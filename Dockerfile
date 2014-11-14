@@ -80,16 +80,16 @@ ADD https://github.com/FoxUSA/OpenNote/releases/download/14.07.02/OpenNote.zip /
 RUN unzip /OpenNote.zip -d /app/
 
 # Clean up
-RUN rm /app/Service/Config.*
-RUN rm /app/Service/install.php
+#RUN rm /app/Service/Config.*
+#RUN rm /app/Service/install.php
 
 # Add pre-made config and setup script
-ADD Config.php /app/Service/
+#ADD Config.php /app/Service/
 
 # mysql setup script
-RUN pacman -Suy --noconfirm --needed pwgen
-ADD create_mysql_admin_user.sh /root/create_mysql_admin_user.sh
-RUN chmod +x /root/create_mysql_admin_user.sh
+#RUN pacman -Suy --noconfirm --needed pwgen
+#ADD create_mysql_admin_user.sh /root/create_mysql_admin_user.sh
+#RUN chmod +x /root/create_mysql_admin_user.sh
 #ENV MYSQL_PASS tacobell
 
 # Set permissions
@@ -97,9 +97,9 @@ RUN chmod 755 /app -R
 RUN chown http:http /app -R
 
 # setup mysql populate database
-WORKDIR /usr
+#WORKDIR /usr
 #RUN mysql_install_db --user=mysql --ldata=/var/lib/mysql
-RUN cd '.' ; ./bin/mysqld_safe --datadir='/var/lib/mysql' & sleep 5
+#RUN cd '.' ; ./bin/mysqld_safe --datadir='/var/lib/mysql' & sleep 5
 #RUN mysql -u root -e "CREATE DATABASE OpenNote"
 #RUN mysql -u root OpenNote < /app/Service/model/sql/notebook.sql
 #RUN mysql_waitpid $(cat /var/lib/mysql/*.pid) 10
@@ -107,7 +107,7 @@ RUN cd '.' ; ./bin/mysqld_safe --datadir='/var/lib/mysql' & sleep 5
 #RUN /root/create_mysql_admin_user.sh
 
 # move app to served directory
-RUN mv /app /srv/http/notes
+RUN mv /app /srv/http
 
 # start mysql and apache servers
 CMD apachectl start; cd '.' ; ./bin/mysqld_safe --datadir='/var/lib/mysql'
