@@ -97,7 +97,7 @@ RUN chmod 755 /app -R
 RUN chown http:http /app -R
 
 # setup mysql populate database
-#WORKDIR /usr
+WORKDIR /usr
 #RUN mysql_install_db --user=mysql --ldata=/var/lib/mysql
 #RUN cd '.' ; ./bin/mysqld_safe --datadir='/var/lib/mysql' & sleep 5
 #RUN mysql -u root -e "CREATE DATABASE OpenNote"
@@ -107,7 +107,7 @@ RUN chown http:http /app -R
 #RUN /root/create_mysql_admin_user.sh
 
 # move app to served directory
-RUN mv /app /srv/http
+RUN mv /app/* /srv/http/.
 
 # start mysql and apache servers
 CMD apachectl start; cd '.' ; ./bin/mysqld_safe --datadir='/var/lib/mysql'
