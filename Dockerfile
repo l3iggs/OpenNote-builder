@@ -25,6 +25,7 @@ RUN git config --global user.name "Build Bot"
 
 # Install runtime deps
 RUN pacman -Suy --noconfirm --needed apache php php-apache mariadb openssl
+RUN pacman -Suy --noconfirm --needed sqlite php-sqlite
 
 # setup apache ssl
 RUN sed -i 's,#LoadModule ssl_module modules/mod_ssl.so,LoadModule ssl_module modules/mod_ssl.so,g' /etc/httpd/conf/httpd.conf
@@ -37,7 +38,13 @@ RUN sed -i 's,LoadModule mpm_event_module modules/mod_mpm_event.so,LoadModule mp
 RUN echo "Include conf/extra/php5_module.conf" >> /etc/httpd/conf/httpd.conf
 
 RUN sed -i 's,;extension=pdo_mysql.so,extension=pdo_mysql.so,g' /etc/php/php.ini
-RUN sed -i 's,;extension=mysqli.so,extension=mysqli.so,g' /etc/php/php.ini
+#RUN sed -i 's,;extension=mysqli.so,extension=mysqli.so,g' /etc/php/php.ini
+RUN sed -i 's,mysql.trace_mode = Off,mysql.trace_mode = On' /etc/php/php.ini
+RUN sed -i 's,mysql.default_host =,mysql.default_host = localhost' /etc/php/php.ini
+RUN sed -i 's,mysql.default_user =,mysql.default_user = root' /etc/php/php.ini
+RUN sed -i 's,mysql.default_password =,mysql.default_password = tacobell' /etc/php/php.ini
+
+RUN sed -i 's,;extension=sqlite3.so,extension=sqlite3.so' /etc/php/php.ini
 
 # setup deps
 RUN pacman -Suy --noconfirm --needed zip unzip
@@ -75,8 +82,7 @@ RUN cd /root/OpenNote/OpenNote/; zip -r /OpenNote.zip .
 
 # extract opennote package
 RUN mkdir /app
-RUN rm /OpenNote.zip
-ADD https://github.com/FoxUSA/OpenNote/releases/download/14.07.02/OpenNote.zip /
+#ADD https://github.com/FoxUSA/OpenNote/releases/download/14.07.02/OpenNote.zip /
 RUN unzip /OpenNote.zip -d /app/
 
 # Clean up
