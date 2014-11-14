@@ -48,7 +48,7 @@ RUN sed -i 's,;extension=sqlite3.so,extension=sqlite3.so,g' /etc/php/php.ini
 RUN sed -i 's,;extension=pdo_sqlite.so,extension=pdo_sqlite.so,g' /etc/php/php.ini
 
 # setup deps
-RUN pacman -Suy --noconfirm --needed zip unzip dos2unix
+RUN pacman -Suy --noconfirm --needed zip unzip dos2unix vim
 
 # Build deps
 RUN pacman -Suy --noconfirm --needed nodejs
