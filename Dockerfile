@@ -58,13 +58,19 @@ RUN rm -rf /root/OpenNote/OpenNote/composer*
 RUN cd /root/OpenNote/OpenNote/; zip -r /OpenNote.zip .
 
 # Install runtime deps
-RUN pacman -Suy --noconfirm --needed apache php php-apache mariadb
+RUN pacman -Suy --noconfirm --needed apache php php-apache mariadb openssl
 
-# setup apache with ssl, php and mysql enabled
-RUN sed -i 's,#LoadModule ssl_module modules/mod_ssl.so,LoadModule ssl_module modules/mod_ssl.so\nLoadModule php5_module modules/libphp5.so,g' /etc/httpd/conf/httpd.conf
+# setup apache ssl, php and mysql enabled
+RUN sed -i 's,#LoadModule ssl_module modules/mod_ssl.so,LoadModule ssl_module modules/mod_ssl.so,g' /etc/httpd/conf/httpd.conf
+RUN sed -i 's,#LoadModule socache_shmcb_module modules/mod_socache_shmcb.so,LoadModule socache_shmcb_module modules/mod_socache_shmcb.so,g' /etc/httpd/conf/httpd.conf
+RUN sed -i 's,#Include conf/extra/httpd-ssl.conf,Include conf/extra/httpd-ssl.conf,g' /etc/httpd/conf/httpd.conf
+
+RUN sed -i 's,LoadModule rewrite_module modules/mod_rewrite.so,LoadModule rewrite_module modules/mod_rewrite.so\nLoadModule php5_module modules/libphp5.so,g' /etc/httpd/conf/httpd.conf
 RUN sed -i 's,LoadModule mpm_event_module modules/mod_mpm_event.so,LoadModule mpm_prefork_module modules/mod_mpm_prefork.so,g' /etc/httpd/conf/httpd.conf
 RUN echo "Include conf/extra/php5_module.conf" >> /etc/httpd/conf/httpd.conf
+
 RUN sed -i 's,;extension=pdo_mysql.so,extension=pdo_mysql.so,g' /etc/php/php.ini
+RUN sed -i 's,;extension=mysqli.so,extension=mysqli.so,g' /etc/php/php.ini
 
 # extract opennote package
 RUN mkdir /app
