@@ -116,4 +116,4 @@ RUN chown http:http /app -R
 RUN mv /app/* /srv/http/.
 
 # start mysql and apache servers
-CMD apachectl start; cd '.' ; ./bin/mysqld_safe --datadir='/var/lib/mysql'
+CMD cd '.' ; ./bin/mysqld_safe --datadir='/var/lib/mysql'; apachectl -DFOREGROUND
