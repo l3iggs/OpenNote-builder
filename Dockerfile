@@ -1,29 +1,20 @@
 FROM base/archlinux
 MAINTAINER l3iggs <l3iggs@live.com>
 
-# update
+# update pacman db
 RUN pacman -Suy --noconfirm
 
 # setup yaourt
 RUN pacman -Suy --noconfirm --needed base-devel
-ADD https://aur.archlinux.org/packages/pa/package-query/package-query.tar.gz /root/
-RUN tar -vxf /root/package-query.tar.gz -C /root/
-RUN cd /root/package-query && makepkg -s --noconfirm --asroot
-RUN pacman -U --noconfirm --needed /root/package-query/*.pkg.tar.xz
-RUN rm -rf /root/package-query*
-
-ADD https://aur.archlinux.org/packages/ya/yaourt/yaourt.tar.gz /root/
-RUN tar -vxf /root/yaourt.tar.gz -C /root/
-RUN cd /root/yaourt && makepkg -s --noconfirm --asroot
-RUN pacman -U --noconfirm --needed /root/yaourt/*.pkg.tar.xz
-RUN rm -rf /root/yaourt*
+RUN bash -c 'bash <(curl aur.sh) -si --noconfirm --asroot package-query yaourt'
+RUN yaourt -Suya
 
 # git
 RUN pacman -Suy --noconfirm --needed git
 RUN git config --global user.email "buildbot@none.com"
 RUN git config --global user.name "Build Bot"
 
-# Install runtime deps
+# Install some LAMP stack things
 RUN pacman -Suy --noconfirm --needed apache php php-apache mariadb openssl
 RUN pacman -Suy --noconfirm --needed sqlite php-sqlite
 
